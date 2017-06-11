@@ -1,1 +1,1 @@
-# Money Transfer Distribution : MoTraDis
+# Money Transfair : low cost Money Transfer
