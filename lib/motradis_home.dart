@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 enum _MotradisMenuItem {
-  registration,
+  signUp,
   signIn /*, calculateFee, traceTransfer, transferList, profil, costomerService, settings*/
 }
-enum MotradisHomeTab { send, signInOrRegister }
+enum MotradisHomeTab { send, receive, signInOrUp }
 
 class _NotImplementedDialog extends StatelessWidget {
   @override
@@ -56,7 +56,7 @@ class MotradisHomeState extends State<MotradisHome> {
 
   void _handleTransferMenu(BuildContext context, _MotradisMenuItem value) {
     switch (value) {
-      case _MotradisMenuItem.registration:
+      case _MotradisMenuItem.signUp:
         showDialog<Null>(
             context: context,
             child: new _NotImplementedDialog()
@@ -75,13 +75,13 @@ class MotradisHomeState extends State<MotradisHome> {
     return new Drawer(
       child: new ListView(
         children: <Widget>[
-          const DrawerHeader(child: const Center(child: const Text('MTO'))),
+          const DrawerHeader(child: const Center(child: const Text('MoneyTransfair'))),
           const ListTile(
-            title: const Text('Registration'),
+            title: const Text('Sign up'),
             selected: true,
           ),
           const ListTile(
-            title: const Text('Sign-In'),
+            title: const Text('Sign in'),
             enabled: false,
           ),
           const Divider(),
@@ -111,7 +111,7 @@ class MotradisHomeState extends State<MotradisHome> {
   Widget buildAppBar() {
     return new AppBar(
       elevation: 0.0,
-      title: new Text('MoTraDis'),
+      title: new Text('MoneyTransfair'),
       actions: <Widget>[
         new PopupMenuButton<_MotradisMenuItem>(
           onSelected: (_MotradisMenuItem value) {
@@ -120,13 +120,13 @@ class MotradisHomeState extends State<MotradisHome> {
           itemBuilder: (BuildContext context) =>
           <PopupMenuItem<_MotradisMenuItem>>[
             new CheckedPopupMenuItem<_MotradisMenuItem>(
-              value: _MotradisMenuItem.registration,
+              value: _MotradisMenuItem.signUp,
               checked: _autorefresh,
-              child: const Text('Registration'),
+              child: const Text('Sign up'),
             ),
             const PopupMenuItem<_MotradisMenuItem>(
               value: _MotradisMenuItem.signIn,
-              child: const Text('Sign In'),
+              child: const Text('Sign in'),
             )
           ],
         ),
@@ -134,7 +134,8 @@ class MotradisHomeState extends State<MotradisHome> {
       bottom: new TabBar(
         tabs: <Widget>[
           new Tab(text: 'Send'),
-          new Tab(text: 'Sign-In or Register'),
+          new Tab(text: 'Sign in/up'),
+          new Tab(text: 'Receive'),
         ],
       ),
     );
@@ -151,8 +152,9 @@ class MotradisHomeState extends State<MotradisHome> {
         drawer: _buildDrawer(context),
         body: new TabBarView(
           children: <Widget>[
-            new Tab(text: 'Send'),
-            new Tab(text: 'Register'),
+            new Tab(text: 'Send Liste Items'),
+            new Tab(text: 'Sign-In'),
+            new Tab(text: 'Receive List Items'),
           ],
         ),
       ),

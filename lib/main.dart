@@ -28,7 +28,7 @@ class MotradisApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: 'Money Transfer',
+        title: 'MoneyTransfair',
         theme: theme,
         routes: <String, WidgetBuilder>{
           '/': (BuildContext context) => new MotradisHome(_symbols),
@@ -62,7 +62,7 @@ class MotradisState extends State<Motradis> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("MoTraDis"),
+        title: new Text("MoneyTransfair"),
         elevation: Theme
             .of(context)
             .platform == TargetPlatform.iOS ? 0.0 : 4.0,
