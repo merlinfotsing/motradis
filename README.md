@@ -1,1 +1,1 @@
-# Money Transfair : low cost Money Transfer
+# MoneyTransfair : low cost Money Transfer
