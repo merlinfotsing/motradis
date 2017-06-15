@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'moneytransfair/app.dart';
 import 'motradis_home.dart';
 import 'motradis_settings.dart';
 
 void main() {
-  runApp(new MotradisApp());
+  runApp(new MoneyTransfairApp());
 }
 
 class MotradisApp extends StatelessWidget {

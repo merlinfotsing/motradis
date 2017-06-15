@@ -1,9 +1,20 @@
 name: motradis
-description: A new Flutter project.
+description: Moneytransfair project build on flutter.
 
 dependencies:
+  collection: '>=1.9.1 <2.0.0'
+  intl: '>=0.14.0 <0.15.0'
+  string_scanner: ^1.0.0
+
   flutter:
     sdk: flutter
+  url_launcher: ^0.4.0
+
+  # Also update dev/benchmarks/complex_layout/pubspec.yaml
+  flutter_gallery_assets:
+    git:
+      url: https://flutter.googlesource.com/gallery-assets
+      ref: 0b6cdb29b24ecc60781c2828086d955dacdc0152
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -15,6 +26,15 @@ flutter:
   # included with your application, so that you can use the icons in
   # the Icons class.
   uses-material-design: true
+  assets:
+      - packages/flutter_gallery_assets/appbar_background.jpg
+      - packages/flutter_gallery_assets/appbar/appbar_background_layer0.png
+      - packages/flutter_gallery_assets/appbar/appbar_background_layer1.png
+      - packages/flutter_gallery_assets/appbar/appbar_background_layer2.png
+      - packages/flutter_gallery_assets/appbar/appbar_background_layer3.png
+      - packages/flutter_gallery_assets/appbar/appbar_background_layer4.png
+      - packages/flutter_gallery_assets/appbar/appbar_background_layer5.png
+      - packages/flutter_gallery_assets/about_logo.png
 
   # To add assets to your application, add an assets section here, in
   # this "flutter" section, as in:
