@@ -159,7 +159,6 @@ class MoneytransfairHomeState extends State<MoneytransfairHome>
               expandedHeight: _kFlexibleSpaceMaxHeight,
               flexibleSpace: const FlexibleSpaceBar(
                 title: const Text('Moneytransfair'),
-                // TODO(abarth): Wire up to the parallax in a way that doesn't pop during hero transition.
                 background: const _AppBarBackground(
                     animation: kAlwaysDismissedAnimation),
               ),
