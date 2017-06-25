@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:motradis/moneytransfair/syntax_highlighter.dart';
+import 'package:motradis/common/app_theme.dart';
 
 class ComponentTabData {
   ComponentTabData({this.widget, this.codeTag, this.description, this.tabName});
 
   final Widget widget;
-  final String codeTag;
-  final String description;
+  final Widget codeTag;
+  final Widget description;
   final String tabName;
 
   @override
@@ -24,31 +25,54 @@ class ComponentTabData {
 }
 
 class TabbedComponentScaffold extends StatelessWidget {
-  TabbedComponentScaffold({this.components, this.title});
+  TabbedComponentScaffold({this.components, this.title, this.isMultiTab}) :
+        assert(isMultiTab != null);
 
   final List<ComponentTabData> components;
   final String title;
+  final bool isMultiTab;
+  final double _appBarElevation = 0.0;
 
   void _showViewCode(BuildContext context) {
-    final String tag = components[DefaultTabController
+    final Widget tag = components[DefaultTabController
         .of(context)
         .index].codeTag;
     if (tag != null) {
       Navigator.push(context, new MaterialPageRoute(
-          builder: (BuildContext context) => new FullScreenCodeDialog(
+          builder: (BuildContext context) =>
+          new FullScreenCodeDialog(
               codeTag: tag)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    AppTheme theme = AppTheme.of(context);
     return new DefaultTabController(
       length: components.length,
       child: new Scaffold(
         appBar: new AppBar(
-          title: new Text(title),
+          flexibleSpace: new Container(decoration: new BoxDecoration(
+              border: new Border(
+                  bottom: new BorderSide(color: theme.dividerColor)))),
+          elevation: _appBarElevation,
+          backgroundColor: theme.appBarBackgroundColor,
+          iconTheme: Theme
+              .of(context)
+              .iconTheme,
+          brightness: Brightness.light,
+          title: new Center(child: new Text(title, style: AppTheme
+              .of(context)
+              .appBarTitleStyle)),
           actions: <Widget>[
-            new Builder(
+            new IconButton(
+                icon: const Icon(Icons.add_alert),
+                tooltip: 'New Alert',
+                onPressed: () {
+                  _showViewCode(context);
+                }
+            ),
+            /*new Builder(
               builder: (BuildContext context) {
                 return new IconButton(
                   icon: const Icon(Icons.description),
@@ -58,26 +82,27 @@ class TabbedComponentScaffold extends StatelessWidget {
                   },
                 );
               },
-            ),
+            ),*/
           ],
-          bottom: new TabBar(
+          bottom: isMultiTab ? new TabBar(
             isScrollable: true,
             tabs: components.map((ComponentTabData data) =>
             new Tab(text: data.tabName)).toList(),
-          ),
+          ) : null,
         ),
         body: new TabBarView(
           children: components.map((ComponentTabData component) {
             return new Column(
               children: <Widget>[
                 new Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: new Text(component.description,
+                  padding: const EdgeInsets.all(16.0),
+                  child: component.description,
+                  /*child: new Text(component.description,
                         style: Theme
                             .of(context)
                             .textTheme
                             .subhead
-                    )
+                    )*/
                 ),
                 new Expanded(child: component.widget)
               ],
@@ -92,7 +117,7 @@ class TabbedComponentScaffold extends StatelessWidget {
 class FullScreenCodeDialog extends StatefulWidget {
   const FullScreenCodeDialog({ this.codeTag });
 
-  final String codeTag;
+  final Widget codeTag;
 
   @override
   FullScreenCodeDialogState createState() => new FullScreenCodeDialogState();
@@ -100,7 +125,7 @@ class FullScreenCodeDialog extends StatefulWidget {
 
 class FullScreenCodeDialogState extends State<FullScreenCodeDialog> {
 
-  String _code;
+  Widget _code;
 
   @override
   void didChangeDependencies() {
@@ -130,7 +155,8 @@ class FullScreenCodeDialogState extends State<FullScreenCodeDialog> {
                       style: const TextStyle(
                           fontFamily: 'monospace', fontSize: 10.0),
                       children: <TextSpan>[
-                        new DartSyntaxHighlighter(style).format(_code)
+                        new DartSyntaxHighlighter(style).format(
+                            _code.toString())
                       ]
                   )
               )

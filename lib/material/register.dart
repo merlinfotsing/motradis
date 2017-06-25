@@ -29,14 +29,14 @@ Widget _verificationText = new Text(
 
 Widget _verificationCode = new Text('Verification code');
 
-class InvoiceWidget extends StatefulWidget {
-  static const String routeName = '/material//send';
+class Register extends StatefulWidget {
+  static const String routeName = '/material//register';
 
   @override
-  _InvoiceWidgetState createState() => new _InvoiceWidgetState();
+  _RegisterState createState() => new _RegisterState();
 }
 
-class _InvoiceWidgetState extends State<InvoiceWidget> {
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     final List<ComponentTabData> components = <ComponentTabData>[
@@ -70,7 +70,6 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
         title: 'Send Money',
         components: components,
         isMultiTab: true
-
     );
   }
 
