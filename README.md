@@ -6,6 +6,8 @@
 2. Setup your environment [Flutter](https://flutter.io/setup/)
 
 3. Clone the Project [motradis](https://github.com/merlinfotsing/motradis.git)
+* $ cd c:/dev/
+* $ git clone https://github.com/merlinfotsing/motradis.git
 
 4. Set up your [Android device](https://flutter.io/setup-windows/#system-requirements) 
 
