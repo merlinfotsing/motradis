@@ -6,31 +6,31 @@ import 'package:flutter/material.dart';
 import 'package:motradis/common/component_tab.dart';
 
 Widget _invoiceText =
-new Text('Invoice Information here '
-    'function will be describe shortly');
+new Text('Invoice Information here \n'
+    'functionality is up to come');
 
 Widget _invoiceCode = new Text('buttons_raised');
 
 Widget _recipientText =
-new Text('Receipient Information here '
-    'function will be describe shortly');
+new Text('Receipient Information here \n'
+    'functionality is up to come');
 
 Widget _receipientCode = new Text('receipient Code');
 
 Widget _paymentText = new Text(
-    'Paymenet Information here '
-        'function will be describe shortly');
+    'Paymenet Information here \n'
+        'functionality is up to come');
 
 Widget _paymentCode = new Text('payment methode');
 
 Widget _verificationText = new Text(
-    'Verification Information here '
-        'function will be describe shortly');
+    'Verification Information here \n'
+        'functionality is up to come');
 
 Widget _verificationCode = new Text('Verification code');
 
 class InvoiceWidget extends StatefulWidget {
-  static const String routeName = '/material//send';
+  static const String routeName = '/material//invoice';
 
   @override
   _InvoiceWidgetState createState() => new _InvoiceWidgetState();
@@ -83,7 +83,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
           new RaisedButton(
             child: const Text('Back'),
             onPressed: () {
-              // Perform some action
+              Navigator.of(context).maybePop();
             },
           ),
           const RaisedButton(
@@ -116,81 +116,12 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     );
   }
 
-  // https://en.wikipedia.org/wiki/Free_Four
-  String dropdown1Value = 'Free';
-  String dropdown2Value;
-  String dropdown3Value = 'Four';
-
   Widget buildPaymentComponent() {
     return new Padding(
       padding: const EdgeInsets.all(24.0),
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new ListTile(
-            title: const Text('Simple dropdown:'),
-            trailing: new DropdownButton<String>(
-              value: dropdown1Value,
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdown1Value = newValue;
-                });
-              },
-              items: <String>['One', 'Two', 'Free', 'Four'].map((String value) {
-                return new DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-          const SizedBox(
-            height: 24.0,
-          ),
-          new ListTile(
-            title: const Text('Dropdown with a hint:'),
-            trailing: new DropdownButton<String>(
-              value: dropdown2Value,
-              hint: const Text('Choose'),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdown2Value = newValue;
-                });
-              },
-              items: <String>['One', 'Two', 'Free', 'Four'].map((String value) {
-                return new DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-          const SizedBox(
-            height: 24.0,
-          ),
-          new ListTile(
-            title: const Text('Scrollable dropdown:'),
-            trailing: new DropdownButton<String>(
-              value: dropdown3Value,
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdown3Value = newValue;
-                });
-              },
-              items: <String>[
-                'One', 'Two', 'Free', 'Four', 'Can', 'I', 'Have', 'A', 'Little',
-                'Bit', 'More', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'
-              ]
-                  .map((String value) {
-                return new DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              })
-                  .toList(),
-            ),
-          ),
-        ],
+        children: <Widget>[],
       ),
     );
   }

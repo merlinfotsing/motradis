@@ -1,11 +1,9 @@
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:motradis/common/item.dart';
-import 'package:motradis/common/updates.dart';
 
 import 'home.dart';
 
@@ -26,24 +24,7 @@ final ThemeData _kMoneytransfairDarkTheme = new ThemeData(
 );
 
 class MoneyTransfairApp extends StatefulWidget {
-  const MoneyTransfairApp({
-    this.updateUrlFetcher,
-    this.enablePerformanceOverlay: true,
-    this.checkerboardRasterCacheImages: true,
-    this.checkerboardOffscreenLayers: true,
-    this.onSendFeedback,
-    Key key}
-      ) : super(key: key);
-
-  final UpdateUrlFetcher updateUrlFetcher;
-
-  final bool enablePerformanceOverlay;
-
-  final bool checkerboardRasterCacheImages;
-
-  final bool checkerboardOffscreenLayers;
-
-  final VoidCallback onSendFeedback;
+  const MoneyTransfairApp({Key key}) : super(key: key);
 
   @override
   MoneytransfairAppState createState() => new MoneytransfairAppState();
@@ -74,63 +55,7 @@ class MoneytransfairAppState extends State<MoneyTransfairApp> {
 
   @override
   Widget build(BuildContext context) {
-    Widget home = new MoneytransfairHome(
-      useLightTheme: _useLightTheme,
-      onThemeChanged: (bool value) {
-        setState(() {
-          _useLightTheme = value;
-        });
-      },
-      showPerformanceOverlay: _showPerformanceOverlay,
-      onShowPerformanceOverlayChanged: widget.enablePerformanceOverlay ? (bool value) {
-        setState(() {
-          _showPerformanceOverlay = value;
-        });
-      } : null,
-      checkerboardRasterCacheImages: _checkerboardRasterCacheImages,
-      onCheckerboardRasterCacheImagesChanged: widget.checkerboardRasterCacheImages ? (bool value) {
-        setState(() {
-          _checkerboardRasterCacheImages = value;
-        });
-      } : null,
-      checkerboardOffscreenLayers: _checkerboardOffscreenLayers,
-      onCheckerboardOffscreenLayersChanged: widget.checkerboardOffscreenLayers ? (bool value) {
-        setState(() {
-          _checkerboardOffscreenLayers = value;
-        });
-      } : null,
-      onPlatformChanged: (TargetPlatform value) {
-        setState(() {
-          _platform = value == defaultTargetPlatform ? null : value;
-        });
-      },
-      timeDilation: _timeDilation,
-      onTimeDilationChanged: (double value) {
-        setState(() {
-          _timeDilationTimer?.cancel();
-          _timeDilationTimer = null;
-          _timeDilation = value;
-          if (_timeDilation > 1.0) {
-            // We delay the time dilation change long enough that the user can see
-            // that the checkbox in the drawer has started reacting, then we slam
-            // on the brakes so that they see that the time is in fact now dilated.
-            _timeDilationTimer = new Timer(const Duration(milliseconds: 150), () {
-              timeDilation = _timeDilation;
-            });
-          } else {
-            timeDilation = _timeDilation;
-          }
-        });
-      },
-      onSendFeedback: widget.onSendFeedback,
-    );
-
-    if (widget.updateUrlFetcher != null) {
-      home = new Updater(
-        updateUrlFetcher: widget.updateUrlFetcher,
-        child: home,
-      );
-    }
+    Widget home = new MoneytransfairHome();
 
     return new MaterialApp(
       title: 'Moneytransfair',

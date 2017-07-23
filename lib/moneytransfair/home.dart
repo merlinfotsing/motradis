@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:motradis/common/drawer.dart';
 import 'package:motradis/common/item.dart';
@@ -59,41 +58,7 @@ class _AppBarBackground extends StatelessWidget {
 class MoneytransfairHome extends StatefulWidget {
   MoneytransfairHome({
     Key key,
-    this.useLightTheme,
-    @required this.onThemeChanged,
-    this.timeDilation,
-    @required this.onTimeDilationChanged,
-    this.showPerformanceOverlay,
-    this.onShowPerformanceOverlayChanged,
-    this.checkerboardRasterCacheImages,
-    this.onCheckerboardRasterCacheImagesChanged,
-    this.checkerboardOffscreenLayers,
-    this.onCheckerboardOffscreenLayersChanged,
-    this.onPlatformChanged,
-    this.onSendFeedback,
-  }) : super(key: key) {
-    assert(onThemeChanged != null);
-    assert(onTimeDilationChanged != null);
-  }
-
-  final bool useLightTheme;
-  final ValueChanged<bool> onThemeChanged;
-
-  final double timeDilation;
-  final ValueChanged<double> onTimeDilationChanged;
-
-  final bool showPerformanceOverlay;
-  final ValueChanged<bool> onShowPerformanceOverlayChanged;
-
-  final bool checkerboardRasterCacheImages;
-  final ValueChanged<bool> onCheckerboardRasterCacheImagesChanged;
-
-  final bool checkerboardOffscreenLayers;
-  final ValueChanged<bool> onCheckerboardOffscreenLayersChanged;
-
-  final ValueChanged<TargetPlatform> onPlatformChanged;
-
-  final VoidCallback onSendFeedback;
+  }) : super(key: key);
 
   @override
   MoneytransfairHomeState createState() => new MoneytransfairHomeState();
@@ -131,27 +96,12 @@ class MoneytransfairHomeState extends State<MoneytransfairHome>
     return listItems;
   }
 
+
   @override
   Widget build(BuildContext context) {
     Widget home = new Scaffold(
         key: _scaffoldKey,
-        drawer: new AppDrawer(
-          useLightTheme: widget.useLightTheme,
-          onThemeChanged: widget.onThemeChanged,
-          timeDilation: widget.timeDilation,
-          onTimeDilationChanged: widget.onTimeDilationChanged,
-          showPerformanceOverlay: widget.showPerformanceOverlay,
-          onShowPerformanceOverlayChanged: widget
-              .onShowPerformanceOverlayChanged,
-          checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
-          onCheckerboardRasterCacheImagesChanged: widget
-              .onCheckerboardRasterCacheImagesChanged,
-          checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
-          onCheckerboardOffscreenLayersChanged: widget
-              .onCheckerboardOffscreenLayersChanged,
-          onPlatformChanged: widget.onPlatformChanged,
-          onSendFeedback: widget.onSendFeedback,
-        ),
+        drawer: new AppDrawer(),
         body: new CustomScrollView(
           slivers: <Widget>[
             const SliverAppBar(
