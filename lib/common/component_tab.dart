@@ -24,14 +24,44 @@ class ComponentTabData {
 
 }
 
-class TabbedComponentScaffold extends StatelessWidget {
-  TabbedComponentScaffold({this.components, this.title, this.isMultiTab}) :
+class TabbedComponentScaffold extends StatefulWidget {
+  TabbedComponentScaffold({this.components, this.title, this.isMultiTab, this.controller}) :
         assert(isMultiTab != null);
 
   final List<ComponentTabData> components;
+  final TabController controller;
   final String title;
   final bool isMultiTab;
   final double _appBarElevation = 0.0;
+
+  @override
+  TabbedComponentScaffoldState createState() => new TabbedComponentScaffoldState(components: components, controller: controller, title: title, isMultiTab: isMultiTab);
+}
+
+class TabbedComponentScaffoldState extends State<TabbedComponentScaffold> with SingleTickerProviderStateMixin {
+  TabbedComponentScaffoldState({this.components, this.title, this.isMultiTab, this.controller}) :
+        assert(isMultiTab != null);
+
+
+  final List<ComponentTabData> components;
+  TabController controller;
+  final String title;
+  final bool isMultiTab;
+  final double _appBarElevation = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (isMultiTab) {
+      controller = controller;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
 
   void _showViewCode(BuildContext context) {
     final Widget tag = components[DefaultTabController
@@ -85,12 +115,13 @@ class TabbedComponentScaffold extends StatelessWidget {
             ),*/
           ],
           bottom: isMultiTab ? new TabBar(
+            controller: controller,
             isScrollable: true,
             tabs: components.map((ComponentTabData data) =>
             new Tab(text: data.tabName)).toList(),
           ) : null,
         ),
-        body: new TabBarView(
+        body: new TabBarView(controller: controller,
           children: components.map((ComponentTabData component) {
             return new Column(
               children: <Widget>[

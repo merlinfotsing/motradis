@@ -36,7 +36,35 @@ class InvoiceWidget extends StatefulWidget {
   _InvoiceWidgetState createState() => new _InvoiceWidgetState();
 }
 
-class _InvoiceWidgetState extends State<InvoiceWidget> {
+class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProviderStateMixin {
+
+  /// This controller can be used to programmatically
+  /// set the current displayed page
+  TabController controller;
+
+  /// Indicating the current displayed page
+  /// 0: Invoice
+  /// 1: Recipient
+  /// 2: Payment
+  /// 3: Verification
+  int _pageInvoice = 0;
+  int _pageRecipient = 1;
+  int _pagePayment = 2;
+  int _pageVerification = 3;
+
+
+  @override
+  void initState() {
+    super.initState();
+    controller = new TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<ComponentTabData> components = <ComponentTabData>[
@@ -44,7 +72,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
         tabName: 'Invoice',
         description: _invoiceText,
         widget: buildInvoiceTab(),
-        codeTag: _invoiceCode,
+          codeTag: _invoiceCode
       ),
       new ComponentTabData(
         tabName: 'Recipient',
@@ -69,8 +97,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     return new TabbedComponentScaffold(
         title: 'Send Money',
         components: components,
-        isMultiTab: true
-
+      isMultiTab: true,
+      controller: controller,
     );
   }
 
@@ -86,9 +114,11 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
               Navigator.of(context).maybePop();
             },
           ),
-          const RaisedButton(
+          new RaisedButton(
             child: const Text('Next'),
-            onPressed: null,
+            onPressed: () {
+              controller.animateTo(_pageRecipient, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+            },
           )
         ],
       ),
@@ -101,15 +131,17 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
       child: new ButtonBar(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          new FlatButton(
+          new RaisedButton(
             child: const Text('Back'),
             onPressed: () {
-              // Perform some action
+              controller.animateTo(_pageInvoice, duration: const Duration(milliseconds: 300), curve: Curves.ease);
             },
           ),
-          const FlatButton(
+          new RaisedButton(
             child: const Text('Next'),
-            onPressed: null,
+            onPressed: () {
+              controller.animateTo(_pagePayment, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+            },
           )
         ],
       ),
