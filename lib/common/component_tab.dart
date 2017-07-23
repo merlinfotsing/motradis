@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:motradis/moneytransfair/syntax_highlighter.dart';
 import 'package:motradis/common/app_theme.dart';
+import 'package:motradis/moneytransfair/syntax_highlighter.dart';
 
 class ComponentTabData {
   ComponentTabData({this.widget, this.codeTag, this.description, this.tabName});
@@ -65,14 +65,14 @@ class TabbedComponentScaffold extends StatelessWidget {
               .of(context)
               .appBarTitleStyle)),
           actions: <Widget>[
-            new IconButton(
-                icon: const Icon(Icons.add_alert),
+            /*new IconButton(
+                icon: const Icon(Icons.al),
                 tooltip: 'New Alert',
                 onPressed: () {
                   _showViewCode(context);
                 }
             ),
-            /*new Builder(
+            new Builder(
               builder: (BuildContext context) {
                 return new IconButton(
                   icon: const Icon(Icons.description),

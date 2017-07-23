@@ -2,13 +2,12 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
-
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:motradis/common/item.dart';
 import 'package:motradis/common/updates.dart';
-import 'home.dart';
 
-import 'package:flutter/scheduler.dart' show timeDilation;
+import 'home.dart';
 
 final Map<String, WidgetBuilder> _kRoutes = new Map<String, WidgetBuilder>.fromIterable(
   kAllAppItems,

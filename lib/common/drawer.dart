@@ -7,7 +7,6 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart' show defaultTargetPlatform, required;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class LinkTextSpan extends TextSpan {
@@ -139,6 +138,7 @@ class AppDrawer extends StatelessWidget {
       groupValue: useLightTheme,
       onChanged: onThemeChanged,
       selected: useLightTheme,
+
     );
 
     final Widget darkThemeItem = new RadioListTile<bool>(

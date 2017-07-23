@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:motradis/common/component_tab.dart';
 import 'package:motradis/common/app_theme.dart';
+import 'package:motradis/common/component_tab.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -96,7 +96,25 @@ class _SignInState extends State<SignIn> {
         components: components, title: 'Login', isMultiTab: false);
   }
 
+  bool _obscureTextField() {
+    return !user.showPassword;
+  }
+
+  String _getPasswordObscureText() {
+    return _obscureTextField()
+        ? 'SHOW'
+        : 'HIDE';
+  }
+
   final TextEditingController _textController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   Widget buildLoginTab() {
     final AppTheme appTheme = AppTheme.of(context);
@@ -110,9 +128,10 @@ class _SignInState extends State<SignIn> {
               decoration: new BoxDecoration(
                   color: appTheme.cardBackgroundColor),
               child: new IconTheme(
-                  data: new IconThemeData(color: Theme
-                      .of(context)
-                      .accentColor),
+                  data: new IconThemeData(
+                      color: Theme
+                          .of(context)
+                          .accentColor),
                   child: new Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: new Row(
@@ -123,12 +142,17 @@ class _SignInState extends State<SignIn> {
                               decoration: const InputDecoration(
                                   hintText: 'please enter your e-mail',
                                   labelText: 'E-Mail',
-                                  hideDivider: true
+                                hideDivider: true,
                               ),
                               onSaved: (String value) {
                                 user.email = value;
+                                setState(() {
+                                  _formKey.currentState.setState(() {
+                                    user.email = value;
+                                  });
+                                });
                               },
-                              validator: _validateEmail,
+                              //validator: _validateEmail,
                             ),
                           ),
                           new Container(
@@ -160,26 +184,26 @@ class _SignInState extends State<SignIn> {
                           new Flexible(
                             key: _passwordFieldKey,
                             child: new TextFormField(
+                              controller: _passwordController,
                               decoration: const InputDecoration(
                                   hintText: 'please enter a password',
                                   labelText: 'Password',
                                   hideDivider: true
                               ),
-                              obscureText: !user.showPassword,
+                              obscureText: _obscureTextField(),
                               onSaved: (String value) {
                                 user.password = value;
+                                setState(() {
+
+                                });
                               },
-                              validator: _validatePassword,
+                              // validator: _validatePassword,
                             ),
                           ),
                           new Center(
                               child: new FlatButton(
-                                  onPressed: () {
-                                    user.showPassword = !user.showPassword;
-                                  },
-                                  child: new Text(user.showPassword
-                                      ? 'show text'
-                                      : 'hide text', style: const TextStyle(
+                                  onPressed: () => _changeShowPassword(),
+                                  child: new Text(_getPasswordObscureText(), style: const TextStyle(
                                     color: const Color(0xFF42A5F5),
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w500,
@@ -201,7 +225,7 @@ class _SignInState extends State<SignIn> {
                           margin: const EdgeInsets.only(right: 8.0),
                           child: new FlatButton(
                               onPressed: () {
-                                Form.of(context).save();
+                                Navigator.of(context).maybePop();
                               },
                               child: const Text(
                                   'CANCEL', style: const TextStyle(
@@ -215,7 +239,14 @@ class _SignInState extends State<SignIn> {
                           margin: const EdgeInsets.only(right: 8.0),
                           child: new FlatButton(
                               onPressed: () {
-                                Form.of(context).reset();
+                                setState(() {
+                                  String username = user.email;
+                                  String password = user.password;
+                                  _formKey.currentState.setState(() {
+                                    //user.email = value;
+                                  });
+                                });
+                                //  Form.of(context).save();
                               },
                               child: const Text('SEND', style: const TextStyle(
                                   color: const Color(0xFF42A5F5),
@@ -230,5 +261,9 @@ class _SignInState extends State<SignIn> {
           ],
         )
     );
+  }
+
+  _changeShowPassword() {
+    user.showPassword = !user.showPassword;
   }
 }
