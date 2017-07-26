@@ -17,8 +17,8 @@
 ## Home
 ![Home](./img/home.png) \n
 ## Login
-![Home](./img/login.png) \n
-## Login
-![Home](./img/menu.png) \n
+![Login](./img/login.png) \n
+## Menu
+![Menu](./img/menu.png) \n
 ## Moneytransfer
-![Home](./img/send.png) \n
+![Send Money](./img/send.png) \n
