@@ -12,3 +12,13 @@
 4. Set up your [Android device](https://flutter.io/setup-windows/#system-requirements) 
 
 5. Run and Enjoy the Application 
+
+## They app in image
+## Home
+![Home](./img/home.png) \n
+## Login
+![Home](./img/login.png) \n
+## Login
+![Home](./img/menu.png) \n
+## Moneytransfer
+![Home](./img/send.png) \n
