@@ -62,7 +62,9 @@ class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProvider
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    if (controller != null) {
+      controller.dispose();
+    }
   }
 
   @override

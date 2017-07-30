@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:motradis/common/app_theme.dart';
 import 'package:motradis/common/component_tab.dart';
@@ -28,6 +26,7 @@ class _SignInState extends State<SignIn> {
   User user = new User();
   bool switchValue = false;
 
+  bool _formValid = false;
   bool _formWasEdited = false;
 
 
@@ -36,6 +35,7 @@ class _SignInState extends State<SignIn> {
     if (!form.validate()) {
       _autovalidate = true; // Start validating on every change.
     } else {
+      _formValid = true;
       form.save();
       _storeEmail();
     }
@@ -241,12 +241,9 @@ class _SignInState extends State<SignIn> {
                           margin: const EdgeInsets.only(right: 8.0),
                           child: new FlatButton(
                               onPressed: () {
-                                setState(() {
-                                  user.email = _textController.text;
-                                  user.password = _passwordController.text;
-                                });
                                 _handleSubmitted();
-                                Navigator.of(context).pushNamed(InvoiceWidget.routeName);
+                                if (_formValid)
+                                  Navigator.of(context).pushNamed(InvoiceWidget.routeName);
                               },
                               child: const Text('SEND', style: const TextStyle(
                                   color: const Color(0xFF42A5F5),
@@ -263,15 +260,9 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Future<String> _assignController() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('money.transfair.email');
-  }
-
 
   _storeEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('E-Mail ' + _textController.text + ' will be set into share-preferences.');
     prefs.setString('money.transfair.email', _textController.text);
   }
 
