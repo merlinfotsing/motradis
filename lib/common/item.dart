@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:motradis/common/app_theme.dart';
 import 'package:motradis/material/invoice.dart';
 import 'package:motradis/material/sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'user.dart';
 
 typedef Widget AppBuilder();
 
@@ -59,7 +63,11 @@ Widget _buildPage(BuildContext context, Widget child) {
 }
 
 List<AppItem> _buildAppItems() {
-  final List<AppItem> appItems = <AppItem>[
+  User user;
+  _assingUserData().then((value) {
+    user = value;
+  });
+  return <AppItem>[
     new AppItem(
       title: 'Send',
       subtitle: 'Send your money with fair cost',
@@ -70,10 +78,16 @@ List<AppItem> _buildAppItems() {
       title: 'Sign in / Registration',
       subtitle: 'Sign in or register a new account',
       routeName: SignIn.routeName,
-      buildRoute: (BuildContext context) => _buildPage(context, new SignIn()),
+      buildRoute: (BuildContext context) => _buildPage(context, new SignIn(user)),
     )
   ];
-  return appItems;
+}
+
+Future<User> _assingUserData() async {
+  User user = new User();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  user.email = prefs.getString('money.transfair.email');
+  return user;
 }
 
 final List<AppItem> kAllAppItems = _buildAppItems();

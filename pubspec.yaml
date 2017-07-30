@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^0.4.0
+  shared_preferences: ^0.2.4
 
   # Also update dev/benchmarks/complex_layout/pubspec.yaml
   flutter_gallery_assets:

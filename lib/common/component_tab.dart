@@ -60,7 +60,9 @@ class TabbedComponentScaffoldState extends State<TabbedComponentScaffold> with S
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    if (isMultiTab) {
+      controller.dispose();
+    }
   }
 
   void _showViewCode(BuildContext context) {

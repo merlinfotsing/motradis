@@ -1,49 +1,43 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:motradis/common/app_theme.dart';
 import 'package:motradis/common/component_tab.dart';
+import 'package:motradis/common/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'invoice.dart';
 
 class SignIn extends StatefulWidget {
+  SignIn(this.user);
 
   static const String routeName = '/material//login';
+  final User user;
 
   @override
   _SignInState createState() => new _SignInState();
 }
 
-class User {
-  String email;
-  String password;
-  bool showPassword = false;
-  bool rememberEmail = true;
-}
-
 
 class _SignInState extends State<SignIn> {
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final GlobalKey<FormFieldState> _passwordFieldKey = new GlobalKey<
-      FormFieldState>();
+  final GlobalKey<FormFieldState<String>> _passwordFieldKey = new GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _emailFieldKey = new GlobalKey<FormFieldState<String>>();
   bool _autovalidate = false;
   User user = new User();
   bool switchValue = false;
 
   bool _formWasEdited = false;
 
-  void showInSnackBar(String value) {
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-        content: new Text(value)
-    ));
-  }
 
   void _handleSubmitted() {
     final FormState form = _formKey.currentState;
     if (!form.validate()) {
       _autovalidate = true; // Start validating on every change.
-      showInSnackBar('Please fix the errors in red before submitting.');
     } else {
       form.save();
-      showInSnackBar('${user.email}\'s e-mail is ${user.email}');
+      _storeEmail();
     }
   }
 
@@ -60,12 +54,9 @@ class _SignInState extends State<SignIn> {
 
   String _validatePassword(String value) {
     _formWasEdited = true;
-    if (value.isEmpty)
-      return 'E-Mail is required.';
-    final RegExp emailExp = new RegExp(
-        r'^([\w-\\.]+)@((?:[\w]+\.)+)([a-zA-Z]){2,4}$');
-    if (!emailExp.hasMatch(value))
-      return 'Please enter a valid e-mail adresse';
+    FormFieldState<String> password = _passwordFieldKey.currentState;
+    if (password.value == null || password.value.isEmpty)
+      return 'Please choose a password.';
     return null;
   }
 
@@ -96,9 +87,6 @@ class _SignInState extends State<SignIn> {
         components: components, title: 'Login', isMultiTab: false);
   }
 
-  bool _obscureTextField() {
-    return !user.showPassword;
-  }
 
   String _getPasswordObscureText() {
     return _obscureTextField()
@@ -106,8 +94,19 @@ class _SignInState extends State<SignIn> {
         : 'HIDE';
   }
 
-  final TextEditingController _textController = new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
+  TextEditingController _textController;
+  TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = new TextEditingController(text: widget.user.email);
+    _passwordController = new TextEditingController();
+  }
+
+  bool _obscureTextField() {
+    return !user.showPassword;
+  }
 
   @override
   void dispose() {
@@ -138,10 +137,11 @@ class _SignInState extends State<SignIn> {
                         children: <Widget>[
                           new Flexible(
                             child: new TextFormField(
+                              key: _emailFieldKey,
                               controller: _textController,
                               decoration: const InputDecoration(
-                                  hintText: 'please enter your e-mail',
-                                  labelText: 'E-Mail',
+                                hintText: 'please enter your e-mail',
+                                labelText: 'E-Mail',
                                 hideDivider: true,
                               ),
                               onSaved: (String value) {
@@ -152,7 +152,8 @@ class _SignInState extends State<SignIn> {
                                   });
                                 });
                               },
-                              //validator: _validateEmail,
+                              validator: _validateEmail,
+
                             ),
                           ),
                           new Container(
@@ -182,8 +183,8 @@ class _SignInState extends State<SignIn> {
                     child: new Row(
                         children: <Widget>[
                           new Flexible(
-                            key: _passwordFieldKey,
                             child: new TextFormField(
+                              key: _passwordFieldKey,
                               controller: _passwordController,
                               decoration: const InputDecoration(
                                   hintText: 'please enter a password',
@@ -197,10 +198,11 @@ class _SignInState extends State<SignIn> {
 
                                 });
                               },
-                              // validator: _validatePassword,
+                              validator: _validatePassword,
                             ),
                           ),
                           new Center(
+
                               child: new FlatButton(
                                   onPressed: () => _changeShowPassword(),
                                   child: new Text(_getPasswordObscureText(), style: const TextStyle(
@@ -240,13 +242,11 @@ class _SignInState extends State<SignIn> {
                           child: new FlatButton(
                               onPressed: () {
                                 setState(() {
-                                  String username = user.email;
-                                  String password = user.password;
-                                  _formKey.currentState.setState(() {
-                                    //user.email = value;
-                                  });
+                                  user.email = _textController.text;
+                                  user.password = _passwordController.text;
                                 });
-                                //  Form.of(context).save();
+                                _handleSubmitted();
+                                Navigator.of(context).pushNamed(InvoiceWidget.routeName);
                               },
                               child: const Text('SEND', style: const TextStyle(
                                   color: const Color(0xFF42A5F5),
@@ -261,6 +261,18 @@ class _SignInState extends State<SignIn> {
           ],
         )
     );
+  }
+
+  Future<String> _assignController() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('money.transfair.email');
+  }
+
+
+  _storeEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('E-Mail ' + _textController.text + ' will be set into share-preferences.');
+    prefs.setString('money.transfair.email', _textController.text);
   }
 
   _changeShowPassword() {

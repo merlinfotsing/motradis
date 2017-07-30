@@ -15,10 +15,10 @@
 
 ## They app in image
 ## Home
-![Home](./img/home.png) \n
+![Home](./img/home.png)
 ## Login
-![Login](./img/login.png) \n
+![Login](./img/login.png)
 ## Menu
-![Menu](./img/menu.png) \n
+![Menu](./img/menu.png)
 ## Moneytransfer
-![Send Money](./img/send.png) \n
+![Send Money](./img/send.png)
