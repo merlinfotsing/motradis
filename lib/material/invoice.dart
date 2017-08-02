@@ -5,27 +5,23 @@
 import 'package:flutter/material.dart';
 import 'package:motradis/common/component_tab.dart';
 
-Widget _invoiceText =
-new Text('Invoice Information here \n'
+Widget _invoiceText = new Text('Invoice Information here \n'
     'functionality is up to come');
 
 Widget _invoiceCode = new Text('buttons_raised');
 
-Widget _recipientText =
-new Text('Receipient Information here \n'
+Widget _recipientText = new Text('Receipient Information here \n'
     'functionality is up to come');
 
 Widget _receipientCode = new Text('receipient Code');
 
-Widget _paymentText = new Text(
-    'Paymenet Information here \n'
-        'functionality is up to come');
+Widget _paymentText = new Text('Paymenet Information here \n'
+    'functionality is up to come');
 
 Widget _paymentCode = new Text('payment methode');
 
-Widget _verificationText = new Text(
-    'Verification Information here \n'
-        'functionality is up to come');
+Widget _verificationText = new Text('Verification Information here \n'
+    'functionality is up to come');
 
 Widget _verificationCode = new Text('Verification code');
 
@@ -37,7 +33,6 @@ class InvoiceWidget extends StatefulWidget {
 }
 
 class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProviderStateMixin {
-
   /// This controller can be used to programmatically
   /// set the current displayed page
   TabController controller;
@@ -52,7 +47,6 @@ class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProvider
   int _pagePayment = 2;
   int _pageVerification = 3;
 
-
   @override
   void initState() {
     super.initState();
@@ -62,20 +56,12 @@ class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProvider
   @override
   void dispose() {
     super.dispose();
-    if (controller != null) {
-      controller.dispose();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final List<ComponentTabData> components = <ComponentTabData>[
-      new ComponentTabData(
-        tabName: 'Invoice',
-        description: _invoiceText,
-        widget: buildInvoiceTab(),
-          codeTag: _invoiceCode
-      ),
+      new ComponentTabData(tabName: 'Invoice', description: _invoiceText, widget: buildInvoiceTab(), codeTag: _invoiceCode),
       new ComponentTabData(
         tabName: 'Recipient',
         description: _recipientText,
@@ -97,8 +83,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProvider
     ];
 
     return new TabbedComponentScaffold(
-        title: 'Send Money',
-        components: components,
+      title: 'Send Money',
+      components: components,
       isMultiTab: true,
       controller: controller,
     );
@@ -181,10 +167,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> with SingleTickerProvider
             icon: const Icon(Icons.thumb_up),
             onPressed: null,
           )
-        ]
-            .map((Widget button) =>
-        new SizedBox(width: 64.0, height: 64.0, child: button))
-            .toList(),
+        ].map((Widget button) => new SizedBox(width: 64.0, height: 64.0, child: button)).toList(),
       ),
     );
   }

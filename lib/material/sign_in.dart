@@ -146,14 +146,8 @@ class _SignInState extends State<SignIn> {
                               ),
                               onSaved: (String value) {
                                 user.email = value;
-                                setState(() {
-                                  _formKey.currentState.setState(() {
-                                    user.email = value;
-                                  });
-                                });
                               },
                               validator: _validateEmail,
-
                             ),
                           ),
                           new Container(
@@ -194,9 +188,6 @@ class _SignInState extends State<SignIn> {
                               obscureText: _obscureTextField(),
                               onSaved: (String value) {
                                 user.password = value;
-                                setState(() {
-
-                                });
                               },
                               validator: _validatePassword,
                             ),
